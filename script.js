@@ -10,10 +10,16 @@ const btnJ1 = document.getElementById("btn-j1");
 const btnJ2 = document.getElementById("btn-j2");
 const btnJ3 = document.getElementById("btn-j3");
 const btnJ4 = document.getElementById("btn-j4");
+const juego = document.getElementById("juego");
+const fin = document.querySelector(".fin");
 
 let numRonda = 0;
 let puntaje = 0;
 let ganador = "";
+resJ1 = 0;
+resJ2 = 0;
+resJ3 = 0;
+resJ4 = 0;
 
 // Despliegue form para nombrar jugadores
 btnInicio.addEventListener("click", function () {
@@ -35,7 +41,7 @@ function validate() {
   let n = document.getElementById("size").value;
   let text;
   if (j1 === "" || j2 === "" || j3 === "" || j4 === "" || n < 3 || n > 5) {
-    text = "Error. Alguno de los nombres no es valido";
+    text = "Error. Alguno de los datos no es valido";
   } else {
     iniciar(n, j1, j2, j3, j4);
   }
@@ -59,10 +65,10 @@ function iniciar(n, j1, j2, j3, j4) {
   let tabla3 = generateArray(n, 1, 50);
   let tabla4 = generateArray(n, 1, 50);
 
-  displayTable(tabla1, "tabla1", j1);
-  displayTable(tabla2, "tabla2", j2);
-  displayTable(tabla3, "tabla3", j3);
-  displayTable(tabla4, "tabla4", j4);
+  displayTable(tabla1, "carton1", j1);
+  displayTable(tabla2, "carton2", j2);
+  displayTable(tabla3, "carton3", j3);
+  displayTable(tabla4, "carton4", j4);
 
   document.getElementById("btn-j1").innerHTML = j1;
   document.getElementById("btn-j2").innerHTML = j2;
@@ -70,25 +76,8 @@ function iniciar(n, j1, j2, j3, j4) {
   document.getElementById("btn-j4").innerHTML = j4;
 }
 
-// btnAceptar.addEventListener("click", function () {
-//   btnInicio.classList.add("hidden");
-//   formInicio.classList.add("hidden");
-//   cuentas.classList.remove("hidden");
-//   btnJugadores.classList.remove("hidden");
-
-//   let tabla1 = generateArray(3, 1, 50);
-//   let tabla2 = generateArray(3, 1, 50);
-//   let tabla3 = generateArray(3, 1, 50);
-//   let tabla4 = generateArray(3, 1, 50);
-
-//   displayTable(tabla1, "tabla1", "jugador1");
-//   displayTable(tabla2, "tabla2", "jugador2");
-//   displayTable(tabla3, "tabla3", "jugador3");
-//   displayTable(tabla4, "tabla4", "jugador4");
-// });
-
 btnJ1.addEventListener("click", () => {
-  tabla1 = document.getElementById("tabla1");
+  tabla1 = document.getElementById("carton1");
   if (tabla1.classList.contains("hidden")) {
     tabla1.classList.remove("hidden");
     tabla2.classList.add("hidden");
@@ -98,7 +87,7 @@ btnJ1.addEventListener("click", () => {
 });
 
 btnJ2.addEventListener("click", () => {
-  tabla2 = document.getElementById("tabla2");
+  tabla2 = document.getElementById("carton2");
   if (tabla2.classList.contains("hidden")) {
     tabla2.classList.remove("hidden");
     tabla1.classList.add("hidden");
@@ -108,7 +97,7 @@ btnJ2.addEventListener("click", () => {
 });
 
 btnJ3.addEventListener("click", () => {
-  tabla3 = document.getElementById("tabla3");
+  tabla3 = document.getElementById("carton3");
   if (tabla3.classList.contains("hidden")) {
     tabla3.classList.remove("hidden");
     tabla1.classList.add("hidden");
@@ -118,7 +107,7 @@ btnJ3.addEventListener("click", () => {
 });
 
 btnJ4.addEventListener("click", () => {
-  tabla4 = document.getElementById("tabla4");
+  tabla4 = document.getElementById("carton4");
   if (tabla4.classList.contains("hidden")) {
     tabla4.classList.remove("hidden");
     tabla1.classList.add("hidden");
@@ -174,7 +163,7 @@ function displayTable(array2D, tabla, title) {
   container.appendChild(table);
 }
 
-// Generador de un numero random
+// Generador de un numero random sin repeticiones
 let usedNumbers = new Set();
 
 function randomNum(min, max) {
@@ -187,15 +176,19 @@ function randomNum(min, max) {
   return num;
 }
 
-// Muestra el numero random en pantalla
+// Muestra el numero de ronda
 btnGenerar.addEventListener("click", function () {
   let num = randomNum(1, 50);
-  numRonda++;
-  document.getElementById("ronda").innerHTML = "Ronda: " + numRonda;
-  numAcertado("tabla1", num, "acertados");
-  numAcertado("tabla2", num, "acertados");
-  numAcertado("tabla3", num, "acertados");
-  numAcertado("tabla4", num, "acertados");
+  if (numRonda === 25) {
+    game_over();
+  } else {
+    numRonda++;
+    document.getElementById("ronda").innerHTML = "Ronda: " + numRonda;
+    numAcertado("carton1", num, "acertados");
+    numAcertado("carton2", num, "acertados");
+    numAcertado("carton3", num, "acertados");
+    numAcertado("carton4", num, "acertados");
+  }
 });
 
 // Funcion para colorear el numero acertado
@@ -208,54 +201,71 @@ function numAcertado(tableId, num, classA) {
       cell.classList.add(classA);
     }
   }
+
+  // let { rowsCompletas, colsCompletas } = checkCompleta(
+  //   document.getElementById("tabla1"),
+  //   "acertados"
+  // );
+  // console.log("Fully highlighted rows: ", rowsCompletas);
+  // console.log("Fully highlighted columns: ", colsCompletas);
 }
 
-function checkHighlightedRowsAndColumns(tableId, classA) {
-  const table = document.getElementById(tableId);
+// revisa si una fila o culmna esta completa
+function checkCompleta(table, classA) {
+  console.log(table);
   const rows = table.rows;
-  let fullyHighlightedRows = [];
-  let fullyHighlightedCols = [];
-  let numRows = rows.length;
+  let rowsCompletas = [];
+  let colsCompletas = [];
+  let numRows = rows.length; // por alguna razon este .legth nunca quizo funcionar
   let numCols = rows[0].cells.length;
 
-  // Check each row
+  // revisa cada fila
   for (let i = 0; i < numRows; i++) {
-    let allHighlighted = true;
+    let completa = true;
     for (let j = 0; j < numCols; j++) {
       if (!rows[i].cells[j].classList.contains(classA)) {
-        allHighlighted = false;
+        completa = false;
         break;
       }
     }
-    if (allHighlighted) {
-      fullyHighlightedRows.push(i); // Store the index of the fully highlighted row
+    if (completa) {
+      rowsCompletas.push(i);
     }
   }
 
-  // Check each column
+  // revisa cada columna
   for (let i = 0; i < numCols; i++) {
-    let allHighlighted = true;
+    let completa = true;
     for (let j = 0; j < numRows; j++) {
       if (!rows[j].cells[i].classList.contains(classA)) {
-        allHighlighted = false;
+        completa = false;
         break;
       }
     }
-    if (allHighlighted) {
-      fullyHighlightedCols.push(i); // Store the index of the fully highlighted column
+    if (completa) {
+      colsCompletas.push(i);
     }
   }
 
-  return { fullyHighlightedRows, fullyHighlightedCols };
+  return { rowsCompletas, colsCompletas };
 }
 
-// let { fullyHighlightedRows, fullyHighlightedCols } =
-//     checkHighlightedRowsAndColumns("tabla1", "acertados");
-//   console.log("Fully highlighted rows: ", fullyHighlightedRows);
-//   console.log("Fully highlighted columns: ", fullyHighlightedCols);
+let { rowsCompletas, colsCompletas } = checkCompleta(
+  document.getElementById("carton1"),
+  "acertados"
+);
+console.log("Filas completas: ", rowsCompletas);
+console.log("Columnas completas: ", colsCompletas);
 
-// Example usage
-// let { fullyHighlightedRows, fullyHighlightedCols } =
-//   checkHighlightedRowsAndColumns("t", "classA");
-// console.log("Fully highlighted rows: ", fullyHighlightedRows);
-// console.log("Fully highlighted columns: ", fullyHighlightedCols);
+function game_over(username, inter_id) {
+  juego.classList.add("hidden");
+  fin.classList.remove("hidden");
+  let j1 = document.getElementById("j1").value.trim();
+  let j2 = document.getElementById("j2").value.trim();
+  let j3 = document.getElementById("j3").value.trim();
+  let j4 = document.getElementById("j4").value.trim();
+  document.getElementById("resJ1").innerHTML = j1 + "obtuvo: " + resJ1 + "pts";
+  document.getElementById("resJ2").innerHTML = j2 + "obtuvo: " + resJ2 + "pts";
+  document.getElementById("resJ3").innerHTML = j3 + "obtuvo: " + resJ3 + "pts";
+  document.getElementById("resJ4").innerHTML = j4 + "obtuvo: " + resJ4 + "pts";
+}

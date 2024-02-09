@@ -154,15 +154,6 @@ table {
   font-family: "coiny", sans-serif;
 }
 
-/* .juego {
-  display: grid;
-  grid-template-columns: 500px 500px;
-  row-gap: 50px;
-  column-gap: 50px;
-  align-items: center;
-  justify-content: center;
-} */
-
 table caption {
   font-family: "coiny", sans-serif;
   text-transform: uppercase;
@@ -202,4 +193,17 @@ th {
 
 .size[type="number"] {
   -moz-appearance: textfield;
+}
+
+.fin {
+  background-color: #f43f5e;
+  font-family: "coiny", sans-serif;
+  font-size: 26px;
+  margin-bottom: 40px;
+  padding: 16px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  border-radius: 16px;
 }
