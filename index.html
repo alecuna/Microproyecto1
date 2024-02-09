@@ -46,7 +46,7 @@
           <input type="text" placeholder="Jugador 3" id="j3" />
           <input type="text" placeholder="Jugador 4" id="j4" />
         </div>
-        <div class="btn-size">
+        <div class="cartonSize">
           <input
             class="size"
             type="number"
@@ -58,7 +58,7 @@
           <button type="button" class="btn-aceptar" onclick="validate()">
             Aceptar
           </button>
-          <p class="instruccion" id="demo"></p>
+          <p class="instruccion" id="text"></p>
         </div>
       </form>
 
@@ -71,10 +71,16 @@
 
       <!-- tablas del juego -->
       <section class="juego">
-        <div id="tabla1"></div>
-        <div id="tabla2"></div>
-        <div id="tabla3"></div>
-        <div id="tabla4"></div>
+        <div class="btn-jugadores hidden">
+          <button type="button" class="btn" id="btn-j1">Jugador 1</button>
+          <button type="button" class="btn" id="btn-j2">Jugador 2</button>
+          <button type="button" class="btn" id="btn-j3">Jugador 3</button>
+          <button type="button" class="btn" id="btn-j4">Jugador 4</button>
+        </div>
+        <div id="tabla1" class="hidden"></div>
+        <div id="tabla2" class="hidden"></div>
+        <div id="tabla3" class="hidden"></div>
+        <div id="tabla4" class="hidden"></div>
       </section>
     </div>
 
