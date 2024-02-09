@@ -37,7 +37,7 @@ function validate() {
   if (j1 === "" || j2 === "" || j3 === "" || j4 === "" || n < 3 || n > 5) {
     text = "Error. Alguno de los nombres no es valido";
   } else {
-    iniciar(n);
+    iniciar(n, j1, j2, j3, j4);
   }
   document.getElementById("text").innerHTML = text;
 }
@@ -48,7 +48,7 @@ let tabla2;
 let tabla3;
 let tabla4;
 
-function iniciar(n) {
+function iniciar(n, j1, j2, j3, j4) {
   btnInicio.classList.add("hidden");
   formInicio.classList.add("hidden");
   cuentas.classList.remove("hidden");
@@ -59,10 +59,15 @@ function iniciar(n) {
   let tabla3 = generateArray(n, 1, 50);
   let tabla4 = generateArray(n, 1, 50);
 
-  displayTable(tabla1, "tabla1", "jugador1");
-  displayTable(tabla2, "tabla2", "jugador2");
-  displayTable(tabla3, "tabla3", "jugador3");
-  displayTable(tabla4, "tabla4", "jugador4");
+  displayTable(tabla1, "tabla1", j1);
+  displayTable(tabla2, "tabla2", j2);
+  displayTable(tabla3, "tabla3", j3);
+  displayTable(tabla4, "tabla4", j4);
+
+  document.getElementById("btn-j1").innerHTML = j1;
+  document.getElementById("btn-j2").innerHTML = j2;
+  document.getElementById("btn-j3").innerHTML = j3;
+  document.getElementById("btn-j4").innerHTML = j4;
 }
 
 // btnAceptar.addEventListener("click", function () {

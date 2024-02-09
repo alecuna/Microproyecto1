@@ -129,9 +129,9 @@
 }
 
 .btn-jugadores {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 10px;
 }
 
 .hidden {
@@ -167,6 +167,7 @@ table caption {
   font-family: "coiny", sans-serif;
   text-transform: uppercase;
   color: #f43f5e;
+  font-size: 36px;
 }
 
 td,
