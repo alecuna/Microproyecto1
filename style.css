@@ -198,3 +198,7 @@ th {
   font-family: "coiny", sans-serif;
   align-self: center;
 }
+
+.size[type="number"] {
+  -moz-appearance: textfield;
+}

@@ -10,10 +10,6 @@ const btnJ1 = document.getElementById("btn-j1");
 const btnJ2 = document.getElementById("btn-j2");
 const btnJ3 = document.getElementById("btn-j3");
 const btnJ4 = document.getElementById("btn-j4");
-let j1 = document.getElementById("j1").value.trim();
-let j2 = document.getElementById("j2").value.trim();
-let j3 = document.getElementById("j3").value.trim();
-let j4 = document.getElementById("j4").value.trim();
 
 let numRonda = 0;
 let puntaje = 0;
@@ -32,12 +28,16 @@ btnInicio.addEventListener("click", function () {
 
 // Funcion para validar que no queden nombres vacios
 function validate() {
+  let j1 = document.getElementById("j1").value.trim();
+  let j2 = document.getElementById("j2").value.trim();
+  let j3 = document.getElementById("j3").value.trim();
+  let j4 = document.getElementById("j4").value.trim();
+  let n = document.getElementById("size").value;
   let text;
-  if (j1 === "" || j2 === "" || j3 === "" || j4 === "") {
+  if (j1 === "" || j2 === "" || j3 === "" || j4 === "" || n < 3 || n > 5) {
     text = "Error. Alguno de los nombres no es valido";
-    console.log(j1);
   } else {
-    text = "Todos los nombres son validos.";
+    iniciar(n);
   }
   document.getElementById("text").innerHTML = text;
 }
@@ -48,22 +48,39 @@ let tabla2;
 let tabla3;
 let tabla4;
 
-btnAceptar.addEventListener("click", function () {
+function iniciar(n) {
   btnInicio.classList.add("hidden");
   formInicio.classList.add("hidden");
   cuentas.classList.remove("hidden");
   btnJugadores.classList.remove("hidden");
 
-  let tabla1 = generateArray(3, 1, 50);
-  let tabla2 = generateArray(3, 1, 50);
-  let tabla3 = generateArray(3, 1, 50);
-  let tabla4 = generateArray(3, 1, 50);
+  let tabla1 = generateArray(n, 1, 50);
+  let tabla2 = generateArray(n, 1, 50);
+  let tabla3 = generateArray(n, 1, 50);
+  let tabla4 = generateArray(n, 1, 50);
 
   displayTable(tabla1, "tabla1", "jugador1");
   displayTable(tabla2, "tabla2", "jugador2");
   displayTable(tabla3, "tabla3", "jugador3");
   displayTable(tabla4, "tabla4", "jugador4");
-});
+}
+
+// btnAceptar.addEventListener("click", function () {
+//   btnInicio.classList.add("hidden");
+//   formInicio.classList.add("hidden");
+//   cuentas.classList.remove("hidden");
+//   btnJugadores.classList.remove("hidden");
+
+//   let tabla1 = generateArray(3, 1, 50);
+//   let tabla2 = generateArray(3, 1, 50);
+//   let tabla3 = generateArray(3, 1, 50);
+//   let tabla4 = generateArray(3, 1, 50);
+
+//   displayTable(tabla1, "tabla1", "jugador1");
+//   displayTable(tabla2, "tabla2", "jugador2");
+//   displayTable(tabla3, "tabla3", "jugador3");
+//   displayTable(tabla4, "tabla4", "jugador4");
+// });
 
 btnJ1.addEventListener("click", () => {
   tabla1 = document.getElementById("tabla1");
