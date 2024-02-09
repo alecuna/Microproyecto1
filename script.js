@@ -130,11 +130,17 @@ btnJ4.addEventListener("click", () => {
 // Funcion para gerenerar un array 2D (matriz nxn) con numeros del 1 al 100
 function generateArray(n, min, max) {
   let array2D = [];
+  let usedNumbers = new Set();
 
   for (let i = 0; i < n; i++) {
     let row = [];
     for (let j = 0; j < n; j++) {
-      let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      let randomNum;
+      do {
+        randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      } while (usedNumbers.has(randomNum));
+
+      usedNumbers.add(randomNum);
       row.push(randomNum);
     }
     array2D.push(row);
@@ -169,8 +175,14 @@ function displayTable(array2D, tabla, title) {
 }
 
 // Generador de un numero random
+let usedNumbers = new Set();
+
 function randomNum(min, max) {
-  let num = Math.floor(Math.random() * (max - min + 1)) + min;
+  let num;
+  do {
+    num = Math.floor(Math.random() * (max - min + 1)) + min;
+  } while (usedNumbers.has(num));
+  usedNumbers.add(num);
   document.getElementById("randomNum").innerHTML = "Número: " + num;
   return num;
 }
@@ -198,12 +210,52 @@ function numAcertado(tableId, num, classA) {
   }
 }
 
-// numAcertado("tabla1", 11, "acertados");
-// numAcertado("tabla2", 11, "acertados");
-// numAcertado("tabla3", 11, "acertados");
-// numAcertado("tabla4", 11, "acertados");
+function checkHighlightedRowsAndColumns(tableId, classA) {
+  const table = document.getElementById(tableId);
+  const rows = table.rows;
+  let fullyHighlightedRows = [];
+  let fullyHighlightedCols = [];
+  let numRows = rows.length;
+  let numCols = rows[0].cells.length;
 
-// numAcertado("tabla1", 20, "acertados");
-// numAcertado("tabla2", 20, "acertados");
-// numAcertado("tabla3", 20, "acertados");
-// numAcertado("tabla4", 20, "acertados");
+  // Check each row
+  for (let i = 0; i < numRows; i++) {
+    let allHighlighted = true;
+    for (let j = 0; j < numCols; j++) {
+      if (!rows[i].cells[j].classList.contains(classA)) {
+        allHighlighted = false;
+        break;
+      }
+    }
+    if (allHighlighted) {
+      fullyHighlightedRows.push(i); // Store the index of the fully highlighted row
+    }
+  }
+
+  // Check each column
+  for (let i = 0; i < numCols; i++) {
+    let allHighlighted = true;
+    for (let j = 0; j < numRows; j++) {
+      if (!rows[j].cells[i].classList.contains(classA)) {
+        allHighlighted = false;
+        break;
+      }
+    }
+    if (allHighlighted) {
+      fullyHighlightedCols.push(i); // Store the index of the fully highlighted column
+    }
+  }
+
+  return { fullyHighlightedRows, fullyHighlightedCols };
+}
+
+// let { fullyHighlightedRows, fullyHighlightedCols } =
+//     checkHighlightedRowsAndColumns("tabla1", "acertados");
+//   console.log("Fully highlighted rows: ", fullyHighlightedRows);
+//   console.log("Fully highlighted columns: ", fullyHighlightedCols);
+
+// Example usage
+// let { fullyHighlightedRows, fullyHighlightedCols } =
+//   checkHighlightedRowsAndColumns("t", "classA");
+// console.log("Fully highlighted rows: ", fullyHighlightedRows);
+// console.log("Fully highlighted columns: ", fullyHighlightedCols);
