@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Coiny&family=Holtwood+One+SC&family=Moirai+One&family=Sono:wght@400;600;700&family=Syncopate:wght@700&display=swap"
+    />
+
+    <!-- para importar el style css -->
+    <link href="style.css" rel="stylesheet" />
+
+    <title>BingoSI</title>
+  </head>
+
+  <!-- body -->
+  <body class="body">
+    <div class="container">
+      <!-- header -->
+      <header class="header">
+        <div class="logo">
+          <img src="logo.png" height="200" width="215" />
+          <h1 class="titulo">Bienvenidos al Bingo</h1>
+          <img src="logo2.png" height="200" width="215" />
+        </div>
+      </header>
+      <button class="btn btn-inicio">Iniciar juego</button>
+
+      <!-- form -->
+      <form class="form-inicio hidden">
+        <span class="instruccion">
+          Indique el nombre de los cuatro jugadores</span
+        >
+        <div class="inputs">
+          <input type="text" placeholder="Jugador 1" id="j1" />
+          <input type="text" placeholder="Jugador 2" id="j2" />
+          <input type="text" placeholder="Jugador 3" id="j3" />
+          <input type="text" placeholder="Jugador 4" id="j4" />
+        </div>
+        <div class="btn-size">
+          <input
+            class="size"
+            type="number"
+            placeholder="Tamaño del carton"
+            id="size"
+            min="3"
+            max="5"
+          />
+          <button type="button" class="btn-aceptar" onclick="validate()">
+            Aceptar
+          </button>
+          <p class="instruccion" id="demo"></p>
+        </div>
+      </form>
+
+      <!-- cuentas del juego -->
+      <section class="cuentas hidden">
+        <button type="button" class="btn btn-generar">Generar</button>
+        <div id="randomNum" class="randomNum">Número: -</div>
+        <div id="ronda" class="numRonda">Ronda: 0</div>
+      </section>
+
+      <!-- tablas del juego -->
+      <section class="juego">
+        <div id="tabla1"></div>
+        <div id="tabla2"></div>
+        <div id="tabla3"></div>
+        <div id="tabla4"></div>
+      </section>
+    </div>
+
+    <!-- fin del juego -->
+    <section class="fin"></section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
