@@ -259,6 +259,7 @@ console.log("Columnas completas: ", colsCompletas);
 
 function game_over(username, inter_id) {
   juego.classList.add("hidden");
+  cuentas.classList.add("hidden");
   fin.classList.remove("hidden");
   let j1 = document.getElementById("j1").value.trim();
   let j2 = document.getElementById("j2").value.trim();
