@@ -4,6 +4,7 @@ const btnInicio = document.querySelector(".btn-inicio");
 const formInicio = document.querySelector(".form-inicio");
 const btnAceptar = document.querySelector(".btn-aceptar");
 const btnGenerar = document.querySelector(".btn-generar");
+const btnFin = document.getElementById("btn-fin");
 const cuentas = document.querySelector(".cuentas");
 const btnJugadores = document.querySelector(".btn-jugadores");
 const btnJ1 = document.getElementById("btn-j1");
@@ -21,8 +22,16 @@ resJ2 = 0;
 resJ3 = 0;
 resJ4 = 0;
 
+function inicio() {
+  btnFin.classList.add("hidden");
+  fin.classList.add("hidden");
+  btnInicio.classList.remove("hidden");
+  btnInicio.innerHTML = "Iniciar juego";
+  document.getElementById("text").innerHTML = "";
+}
+
 // Despliegue form para nombrar jugadores
-btnInicio.addEventListener("click", function () {
+btnInicio.addEventListener("click", () => {
   if (formInicio.classList.contains("hidden")) {
     formInicio.classList.remove("hidden");
     btnInicio.textContent = "Ocultar";
@@ -257,16 +266,20 @@ let { rowsCompletas, colsCompletas } = checkCompleta(
 console.log("Filas completas: ", rowsCompletas);
 console.log("Columnas completas: ", colsCompletas);
 
-function game_over(username, inter_id) {
+function game_over() {
   juego.classList.add("hidden");
   cuentas.classList.add("hidden");
   fin.classList.remove("hidden");
+  btnFin.classList.remove("hidden");
+  btnFin.addEventListener("click", () => {
+    inicio();
+  });
   let j1 = document.getElementById("j1").value.trim();
   let j2 = document.getElementById("j2").value.trim();
   let j3 = document.getElementById("j3").value.trim();
   let j4 = document.getElementById("j4").value.trim();
-  document.getElementById("resJ1").innerHTML = j1 + "obtuvo: " + resJ1 + "pts";
-  document.getElementById("resJ2").innerHTML = j2 + "obtuvo: " + resJ2 + "pts";
-  document.getElementById("resJ3").innerHTML = j3 + "obtuvo: " + resJ3 + "pts";
-  document.getElementById("resJ4").innerHTML = j4 + "obtuvo: " + resJ4 + "pts";
+  document.getElementById("resJ1").innerHTML = j1 + " obtuvo: " + resJ1 + "pts";
+  document.getElementById("resJ2").innerHTML = j2 + " obtuvo: " + resJ2 + "pts";
+  document.getElementById("resJ3").innerHTML = j3 + " obtuvo: " + resJ3 + "pts";
+  document.getElementById("resJ4").innerHTML = j4 + " obtuvo: " + resJ4 + "pts";
 }
